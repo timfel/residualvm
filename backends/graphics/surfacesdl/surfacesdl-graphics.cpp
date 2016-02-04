@@ -71,7 +71,7 @@ SurfaceSdlGraphicsManager::SurfaceSdlGraphicsManager(SdlEventSource *sdlEventSou
 	, _opengl(false), _overlayNumTex(0), _overlayTexIds(0)
 	, _frameBuffer(nullptr)
 #endif
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 	, _boxShader(nullptr), _boxVerticesVBO(0)
 #endif
 	{
@@ -377,7 +377,7 @@ Graphics::PixelBuffer SurfaceSdlGraphicsManager::setupScreen(uint screenW, uint 
 		}
 #endif
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 		debug("INFO: GLSL version: %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		const GLfloat vertices[] = {
@@ -593,7 +593,7 @@ void SurfaceSdlGraphicsManager::drawSideTexturesOpenGL() {
 }
 
 void SurfaceSdlGraphicsManager::drawTexture(const Graphics::Texture &tex, const Math::Vector2d &topLeft, const Math::Vector2d &bottomRight, bool flip) {
-#ifndef USE_OPENGL_SHADERS
+#if !defined(USE_GLES2) && !defined(USE_OPENGL_SHADERS)
 	// Save current state
 	glPushAttrib(GL_TRANSFORM_BIT | GL_ENABLE_BIT | GL_DEPTH_BUFFER_BIT | GL_SCISSOR_BIT);
 
@@ -670,7 +670,7 @@ void SurfaceSdlGraphicsManager::drawTexture(const Graphics::Texture &tex, const 
 #endif
 }
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 void SurfaceSdlGraphicsManager::drawOverlayOpenGLShaders() {
 	if (!_overlayscreen)
 		return;
@@ -762,7 +762,7 @@ void SurfaceSdlGraphicsManager::updateScreen() {
 				updateOverlayTextures();
 			}
 
-#ifndef USE_OPENGL_SHADERS
+#if !defined(USE_GLES2) && !defined(USE_OPENGL_SHADERS)
 			drawOverlayOpenGL();
 #else
 			drawOverlayOpenGLShaders();
@@ -1051,7 +1051,7 @@ void SurfaceSdlGraphicsManager::closeOverlay() {
 				_frameBuffer = nullptr;
 			}
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 			glDeleteBuffers(1, &_boxVerticesVBO);
 			_boxVerticesVBO = 0;
 

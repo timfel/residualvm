@@ -23,7 +23,7 @@
 #ifndef BACKENDS_GRAPHICS_SURFACESDL_GRAPHICS_H
 #define BACKENDS_GRAPHICS_SURFACESDL_GRAPHICS_H
 
-#ifdef USE_OPENGL
+#if defined(USE_OPENGL) || defined(USE_GLES2)
 #include "graphics/opengl/system_headers.h"
 #include "graphics/opengl/framebuffer.h"
 #include "graphics/opengl/texture.h"
@@ -31,7 +31,7 @@
 
 #undef ARRAYSIZE
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 #include "graphics/opengles2/shader.h"
 #endif
 
@@ -169,7 +169,7 @@ protected:
 	uint _desktopW, _desktopH;
 	Math::Rect2d _gameRect;
 
-#ifdef USE_OPENGL
+#if defined(USE_OPENGL) || defined(USE_GLES2)
 	// Antialiasing
 	int _antialiasing;
 	void setAntialiasing(bool enable);
@@ -188,7 +188,7 @@ protected:
 
 	Graphics::FrameBuffer *_frameBuffer;
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 	Graphics::Shader *_boxShader;
 	GLuint _boxVerticesVBO;
 

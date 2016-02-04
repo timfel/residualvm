@@ -24,7 +24,7 @@
 
 #if defined(USE_OPENGL) && !defined(AMIGAOS)
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 #include "graphics/opengl/framebuffer.h"
 #elif defined(SDL_BACKEND)
 #define GL_GLEXT_PROTOTYPES // For the GL_EXT_framebuffer_object extension

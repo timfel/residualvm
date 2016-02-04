@@ -48,7 +48,7 @@
 #include "common/system.h"
 #include "common/textconsole.h"
 
-#ifdef USE_OPENGL_SHADERS
+#if defined(USE_OPENGL_SHADERS) || defined(USE_GLES2)
 
 #include "graphics/surface.h"
 #include "graphics/pixelbuffer.h"
